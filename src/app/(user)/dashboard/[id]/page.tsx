@@ -1,6 +1,6 @@
-import { VerifyResponse, UserDashboardRecord } from "@/types";
-import ButtonUI from "@/components/ui/button-ui";
-import { fetcher } from "@/lib/fetcher";
+import { VerifyResponse, UserDashboardRecord } from "@/src/types";
+import ButtonUI from "@/src/components/ui/button-ui";
+import { fetcher } from "@/src/lib/fetcher";
 import Link from "next/link";
 
 export default async function DashboardDetailPage({

@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-import { IconSvgProps } from "@/types";
+import { IconSvgProps } from "../types";
 
 export const MoonFilledIcon = ({
   size = 24,

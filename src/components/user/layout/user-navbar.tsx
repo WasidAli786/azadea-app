@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import InputUI from "@/components/ui/input-ui";
+import InputUI from "../../ui/input-ui";
 import {
   Dropdown,
   DropdownTrigger,
@@ -10,12 +10,12 @@ import {
   DropdownItem,
 } from "@heroui/dropdown";
 import { Avatar } from "@heroui/avatar";
-import { ThemeSwitch } from "@/components/theme-switch";
+import { ThemeSwitch } from "../../theme-switch";
 import Link from "next/link";
 import UserSidebar from "./user-sidebar";
-import { MenuIcon } from "@/components/icons";
-import ButtonUI from "@/components/ui/button-ui";
-import { useDebounce } from "@/hooks/use-debounce";
+import { MenuIcon } from "../../icons";
+import ButtonUI from "../../ui/button-ui";
+import { useDebounce } from "@/src/hooks/use-debounce";
 
 const UserNavbar = () => {
   const router = useRouter();
@@ -51,7 +51,7 @@ const UserNavbar = () => {
             </h1>
           </Link>
 
-          <div className="flex items-center md:gap-2">
+          <div className="flex items-center gap-2 md:gap-4">
             <div className="hidden md:block">
               <InputUI
                 name="search"

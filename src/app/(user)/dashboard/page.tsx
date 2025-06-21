@@ -1,6 +1,6 @@
-import { fetcher } from "@/lib/fetcher";
-import { VerifyResponse } from "@/types";
-import UserCard from "@/components/user/dashboard/user-card";
+import { fetcher } from "@/src/lib/fetcher";
+import { VerifyResponse } from "@/src/types";
+import UserCard from "@/src/components/user/dashboard/user-card";
 
 export const dynamic = "force-dynamic";
 

@@ -1,10 +1,10 @@
 "use client";
 
 import React, { Fragment } from "react";
-import InputUI from "@/components/ui/input-ui";
-import { CloseIcon } from "@/components/icons";
-import ButtonUI from "@/components/ui/button-ui";
-import { userMenu } from "@/config/site";
+import InputUI from "../../ui/input-ui";
+import { CloseIcon } from "../../icons";
+import ButtonUI from "../../ui/button-ui";
+import { userMenu } from "@/src/config/site";
 import Link from "next/link";
 
 interface Props {

@@ -1,11 +1,10 @@
-import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
+import { Providers } from "./providers";
+import { siteConfig } from "../config/site";
+import { montserrat } from "../lib/fonts";
 import clsx from "clsx";
 
-import { Providers } from "./providers";
-
-import { siteConfig } from "@/config/site";
-import { montserrat } from "@/lib/fonts";
+import "../styles/globals.css";
 
 export const metadata: Metadata = {
   title: {

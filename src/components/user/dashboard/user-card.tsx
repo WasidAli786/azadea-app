@@ -1,7 +1,7 @@
-import { BookmarkBorderIcon, BookmarkFilledIcon } from "@/components/icons";
-import ButtonUI from "@/components/ui/button-ui";
-import NextImage from "@/components/ui/next-image";
-import { UserDashboardRecord } from "@/types";
+import { BookmarkBorderIcon, BookmarkFilledIcon } from "../../icons";
+import ButtonUI from "../../ui/button-ui";
+import NextImage from "../../ui/next-image";
+import { UserDashboardRecord } from "@/src/types";
 import { Tooltip } from "@heroui/tooltip";
 import Link from "next/link";
 

@@ -1,8 +1,8 @@
 "use client";
 
-import ButtonUI from "@/components/ui/button-ui";
-import InputUI from "@/components/ui/input-ui";
-import NextImage from "@/components/ui/next-image";
+import ButtonUI from "@/src/components/ui/button-ui";
+import InputUI from "@/src/components/ui/input-ui";
+import NextImage from "@/src/components/ui/next-image";
 import { Form } from "@heroui/form";
 
 export default function LoginPage() {
