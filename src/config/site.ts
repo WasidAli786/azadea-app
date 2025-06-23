@@ -1,3 +1,5 @@
+import { DashboardIcon, HomeIcon, UserIcon } from "../components/icons";
+
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
@@ -12,5 +14,23 @@ export const userMenu = [
   },
   {
     label: "Logout",
+  },
+];
+
+export const adminMenu = [
+  {
+    label: "Home",
+    href: "/admin",
+    icon: HomeIcon,
+  },
+  {
+    label: "Users",
+    href: "/users",
+    icon: UserIcon,
+  },
+  {
+    label: "Dashboard",
+    href: "/modules",
+    icon: DashboardIcon,
   },
 ];
