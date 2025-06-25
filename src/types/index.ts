@@ -5,14 +5,14 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 };
 
 export interface UserDashboardRecord {
-  id: number | string;
+  _id: number | string;
   title: string;
   image_public_url: string;
-  link?: string;
+  link: string;
+  description: string;
+  isBookmarked: boolean;
 }
 
 export interface VerifyResponse {
-  records: {
-    dashboards: UserDashboardRecord[];
-  };
+  cards: UserDashboardRecord[];
 }

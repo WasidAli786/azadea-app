@@ -13,13 +13,18 @@ import { Avatar } from "@heroui/avatar";
 import { ThemeSwitch } from "../../theme-switch";
 import Link from "next/link";
 import UserSidebar from "./user-sidebar";
-import { MenuIcon } from "../../icons";
+import { LogoutIcon, MenuIcon, PasswordIcon } from "../../icons";
 import ButtonUI from "../../ui/button-ui";
 import { useDebounce } from "@/src/hooks/use-debounce";
+import { useUser } from "@/src/context/user-context";
+import ChangePasswordModal from "../../change-password-modal";
+import { useDisclosure } from "@heroui/modal";
 
 const UserNavbar = () => {
   const router = useRouter();
+  const { user, logout } = useUser();
   const searchParams = useSearchParams();
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   const [search, setSearch] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -44,9 +49,9 @@ const UserNavbar = () => {
   return (
     <>
       <nav className="border-b dark:border-gray-700">
-        <div className="h-16 flex items-center justify-between container">
+        <div className="container flex items-center justify-between h-16">
           <Link href="/dashboard">
-            <h1 className="text-xs sm:text-sm font-semibold">
+            <h1 className="text-xs font-semibold sm:text-sm">
               Welcome DataCrypt-testing Account!
             </h1>
           </Link>
@@ -63,33 +68,47 @@ const UserNavbar = () => {
               />
             </div>
             <ThemeSwitch />
-            <div className="hidden md:block">
-              <Dropdown placement="bottom-end">
-                <DropdownTrigger>
-                  <Avatar
-                    isBordered
-                    as="button"
-                    className="transition-transform"
-                    color="secondary"
-                    name="Jason Hughes"
-                    size="sm"
-                    src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                  />
-                </DropdownTrigger>
-                <DropdownMenu aria-label="Profile Actions" variant="flat">
-                  <DropdownItem key="profile" className="h-14 gap-2">
-                    <p className="font-semibold">Signed in as</p>
-                    <p className="font-semibold">zoey@example.com</p>
-                  </DropdownItem>
-                  <DropdownItem key="favorites" href="/favorites">
-                    Favorites
-                  </DropdownItem>
-                  <DropdownItem key="logout" color="danger">
-                    Log Out
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            </div>
+            {user?.id && (
+              <div className="hidden md:block">
+                <Dropdown placement="bottom-end">
+                  <DropdownTrigger>
+                    <Avatar
+                      isBordered
+                      as="button"
+                      className="transition-transform"
+                      color="secondary"
+                      name="Jason Hughes"
+                      size="sm"
+                      src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                    />
+                  </DropdownTrigger>
+                  <DropdownMenu aria-label="Profile Actions" variant="flat">
+                    <DropdownItem key="profile" className="gap-2 h-14">
+                      <p className="font-semibold">Signed in as</p>
+                      <p className="font-semibold">{user?.email}</p>
+                    </DropdownItem>
+                    {/* <DropdownItem key="favorites" href="/favorites">
+                      Favorites
+                    </DropdownItem> */}
+                    <DropdownItem
+                      key="change-password"
+                      startContent={<PasswordIcon />}
+                      onClick={onOpen}
+                    >
+                      Change Password
+                    </DropdownItem>
+                    <DropdownItem
+                      key="logout"
+                      color="danger"
+                      onPress={logout}
+                      startContent={<LogoutIcon />}
+                    >
+                      Log Out
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </div>
+            )}
             <div className="md:hidden">
               <ButtonUI
                 isIconOnly
@@ -107,9 +126,15 @@ const UserNavbar = () => {
 
       <UserSidebar
         isOpen={isSidebarOpen}
+        onModalOpen={onOpen}
         onClose={() => setIsSidebarOpen(false)}
         searchValue={searchParams.get("search") || ""}
         onSearchChange={onSearchChange}
+      />
+      <ChangePasswordModal
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpenChange={onOpenChange}
       />
     </>
   );

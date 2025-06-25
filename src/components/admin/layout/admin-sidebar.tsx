@@ -5,12 +5,14 @@ import {
   OutlineKeyboardArrowLeft,
   OutlineKeyboardArrowRight,
 } from "../../icons";
-import { useAdminContext } from "../admin-context";
+import { useAdminContext } from "@/src/context/admin-context";
 import { adminMenu } from "@/src/config/site";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export const AdminSidebar = () => {
   const { collapsed, toggle } = useAdminContext();
+  const pathname = usePathname();
 
   return (
     <aside
@@ -33,12 +35,12 @@ export const AdminSidebar = () => {
         </button>
       </div>
 
-      <nav className="flex flex-col h-full py-2 overflow-y-auto">
+      <nav className="flex flex-col h-full gap-1 py-2 overflow-y-auto">
         {adminMenu.map((item) => (
           <Link
             key={item.href + item.label}
             href={item.href}
-            className="flex items-center gap-3 p-3 hover:bg-default/40"
+            className={`flex items-center gap-3 p-2 hover:bg-default/40 ${item.href === pathname && "bg-default/40"}`}
           >
             <item.icon className="w-5 h-5" />
             {!collapsed && (

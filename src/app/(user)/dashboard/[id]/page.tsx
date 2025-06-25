@@ -10,12 +10,11 @@ export default async function DashboardDetailPage({
 }) {
   const { id } = await params;
 
-  const data: VerifyResponse = await fetcher(
-    "https://azadea-api.ytech.systems/api/auth/verify"
-  );
+  const data: VerifyResponse = await fetcher("/api/user/cards");
 
-  const record: UserDashboardRecord | undefined =
-    data?.records?.dashboards.find((item) => item.id.toString() === id);
+  const record: UserDashboardRecord | undefined = data?.cards?.find(
+    (item) => item._id.toString() === id
+  );
 
   if (!record) {
     return (
@@ -26,7 +25,7 @@ export default async function DashboardDetailPage({
   return (
     <>
       <div className="flex items-center justify-between">
-        <h1 className="text-sm md:text-2xl font-semibold">{record.title}</h1>
+        <h1 className="text-sm font-semibold md:text-2xl">{record.title}</h1>
         <Link href="/dashboard">
           <ButtonUI variant="ghost">Back To Home</ButtonUI>
         </Link>

@@ -1,29 +1,30 @@
-export type FetchOptions = RequestInit & {
-  headers?: Record<string, string>;
-};
-
-const STATIC_TOKEN =
-  "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F6YWRlYS1hcGkueXRlY2guc3lzdGVtcy9hcGkvYXV0aC9sb2dpbiIsImlhdCI6MTc1MDQ4MTUxNiwiZXhwIjoxNzgyMDE3NTE2LCJuYmYiOjE3NTA0ODE1MTYsImp0aSI6Ik1BdEl0em8zQ1pveEM4SEkiLCJzdWIiOiIyIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.Aedc5bjsX316YUBMsQCaFqFN6h85YAYX_eVBa0v1lLk";
+import { cookies } from "next/headers";
 
 export async function fetcher<T = any>(
-  url: string,
-  options: FetchOptions = {}
+  endpoint: string,
+  options: RequestInit = {}
 ): Promise<T> {
-  const res = await fetch(url, {
+  const token = (await cookies()).get("token")?.value;
+
+  if (!token) {
+    throw new Error("Missing authentication token.");
+  }
+
+  const cookieHeader = `token=${token}`;
+
+  const res = await fetch(`http://localhost:3000${endpoint}`, {
     method: "GET",
-    ...options,
     headers: {
+      Cookie: cookieHeader,
       "Content-Type": "application/json",
-      Authorization: STATIC_TOKEN,
       ...(options.headers || {}),
     },
+    ...options,
   });
 
   if (!res.ok) {
-    const errorData = await res.json().catch(() => ({}));
-    throw new Error(
-      errorData.message || `Fetch error: ${res.status} ${res.statusText}`
-    );
+    const error = await res.json().catch(() => ({}));
+    throw new Error(error.message || `Failed: ${res.status} ${res.statusText}`);
   }
 
   return res.json();

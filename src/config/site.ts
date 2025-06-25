@@ -1,4 +1,10 @@
-import { DashboardIcon, HomeIcon, UserIcon } from "../components/icons";
+import {
+  DashboardIcon,
+  HomeIcon,
+  LogoutIcon,
+  PasswordIcon,
+  UserIcon,
+} from "../components/icons";
 
 export type SiteConfig = typeof siteConfig;
 
@@ -8,12 +14,18 @@ export const siteConfig = {
 };
 
 export const userMenu = [
+  // {
+  //   label: "Favorites",
+  //   link: "/favorites",
+  // },
   {
-    label: "Favorites",
-    link: "/favorites",
+    icon: PasswordIcon,
+    label: "Change Password",
   },
   {
+    icon: LogoutIcon,
     label: "Logout",
+    isLogout: true,
   },
 ];
 
@@ -25,12 +37,12 @@ export const adminMenu = [
   },
   {
     label: "Users",
-    href: "/users",
+    href: "/admin/users",
     icon: UserIcon,
   },
   {
     label: "Dashboard",
-    href: "/modules",
+    href: "/admin/modules",
     icon: DashboardIcon,
   },
 ];

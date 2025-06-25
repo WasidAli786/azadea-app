@@ -9,15 +9,12 @@ interface Props {
 }
 
 export default async function FavoritesPage({ searchParams }: Props) {
-  // Await the searchParams promise
   const resolvedSearchParams = await searchParams;
   const search = resolvedSearchParams?.search?.toLowerCase() || "";
 
-  const data: VerifyResponse = await fetcher(
-    "https://azadea-api.ytech.systems/api/auth/verify"
-  );
+  const data: VerifyResponse = await fetcher("/api/user/cards");
 
-  const filtered = data?.records?.dashboards?.filter((item) =>
+  const filtered = data?.cards?.filter((item) =>
     item.title.toLowerCase().includes(search)
   );
 
@@ -26,9 +23,9 @@ export default async function FavoritesPage({ searchParams }: Props) {
   }
 
   return (
-    <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {filtered.map((record) => (
-        <UserCard key={record?.id} record={record} />
+        <UserCard key={record?._id} record={record} />
       ))}
     </div>
   );

@@ -23,7 +23,7 @@ const ModalUI = ({
         isOpen={isOpen}
         classNames={{
           body: "p-5",
-          header: "border-b",
+          header: "border-b dark:border-gray-700",
         }}
         size={size}
         onOpenChange={onOpenChange}

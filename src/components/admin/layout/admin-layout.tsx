@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 import { AdminNavbar } from "./admin-navbar";
-import { useAdminContext } from "../admin-context";
+import { useAdminContext } from "@/src/context/admin-context";
 
 const AdminLayout = ({ children }: { children: ReactNode }) => {
   const { collapsed } = useAdminContext();

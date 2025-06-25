@@ -2,6 +2,9 @@ import { Metadata, Viewport } from "next";
 import { Providers } from "./providers";
 import { siteConfig } from "../config/site";
 import { montserrat } from "../lib/fonts";
+import { UserProvider } from "../context/user-context";
+import { QueryProvider } from "../lib/query-provider";
+import { Toaster } from "react-hot-toast";
 import clsx from "clsx";
 
 import "../styles/globals.css";
@@ -39,8 +42,11 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
-          {children}
+          <QueryProvider>
+            <UserProvider>{children}</UserProvider>
+          </QueryProvider>
         </Providers>
+        <Toaster />
       </body>
     </html>
   );
