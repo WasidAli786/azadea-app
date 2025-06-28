@@ -11,8 +11,9 @@ export async function fetcher<T = any>(
   }
 
   const cookieHeader = `token=${token}`;
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
-  const res = await fetch(`http://localhost:3000${endpoint}`, {
+  const res = await fetch(`${baseUrl}${endpoint}`, {
     method: "GET",
     headers: {
       Cookie: cookieHeader,
