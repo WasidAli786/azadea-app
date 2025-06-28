@@ -8,14 +8,12 @@ export async function GET() {
   await connectDB();
 
   const payload = await getTokenPayload();
-  const userId = payload?.id;
+  const userId = payload?.id as string;
 
-  // Ensure user is authenticated and ID is valid
   if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
     return NextResponse.json({ cards: [] });
   }
 
-  // Only fetch cards where the user is in the assignee array
   const cards = await Card.find({ assignee: userId })
     .sort({ created: -1 })
     .lean();

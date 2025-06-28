@@ -4,10 +4,11 @@ import User from "@/src/models/User";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   await connectDB();
-  const user = await User.findById(params.id);
+  const user = await User.findById(id);
   if (!user)
     return NextResponse.json({ message: "User not found" }, { status: 404 });
 
@@ -16,13 +17,14 @@ export async function GET(
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   await connectDB();
   const { name, email, department } = await req.json();
 
   const updated = await User.findByIdAndUpdate(
-    params.id,
+    id,
     { name, email, department },
     { new: true }
   );
@@ -35,11 +37,12 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   await connectDB();
 
-  const deleted = await User.findByIdAndDelete(params.id);
+  const deleted = await User.findByIdAndDelete(id);
 
   if (!deleted)
     return NextResponse.json({ message: "User not found" }, { status: 404 });

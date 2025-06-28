@@ -56,7 +56,7 @@ const ModulesModal = ({
               aria-label="User status selection"
               selectedKeys={selectedAssignees}
               onSelectionChange={(keys) => {
-                setSelectedAssignees(new Set(keys as string[]));
+                setSelectedAssignees(new Set(Array.from(keys) as string[]));
               }}
             >
               {dashboardAssignee?.map((item: any) => (
