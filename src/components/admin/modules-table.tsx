@@ -60,6 +60,7 @@ export const ModulesTable = () => {
   );
   const [filterValue, setFilterValue] = useState("");
   const [editingModule, setEditingModule] = useState<any>(null);
+  const [imageBase64, setImageBase64] = useState<string | null>(null);
   const debouncedSearch = useDebounce(filterValue, 400);
 
   const { data, isLoading, refetch, isFetching } = useQuery({
@@ -206,6 +207,7 @@ export const ModulesTable = () => {
     const data = Object.fromEntries(new FormData(e.currentTarget));
     const updatedData = {
       ...data,
+      image: imageBase64,
       assignee: Array.from(selectedAssignees),
     };
     if (editingModule) {
@@ -216,9 +218,10 @@ export const ModulesTable = () => {
   };
 
   const handleEdit = (dashboard: any) => {
-    setEditingModule(dashboard);
     onOpen();
+    setEditingModule(dashboard);
     setSelectedAssignees(dashboard?.assignee);
+    setImageBase64(dashboard?.image);
   };
 
   return (
@@ -251,7 +254,10 @@ export const ModulesTable = () => {
             size="sm"
             color="primary"
             endContent={<PlusIcon className="text-xl" />}
-            onPress={onOpen}
+            onPress={() => {
+              onOpen();
+              setImageBase64("");
+            }}
           >
             Add
           </ButtonUI>
@@ -313,6 +319,8 @@ export const ModulesTable = () => {
         dashboardAssignee={dashboardAssignee}
         selectedAssignees={selectedAssignees}
         setSelectedAssignees={setSelectedAssignees}
+        imageBase64={imageBase64}
+        setImageBase64={setImageBase64}
       />
     </>
   );

@@ -7,6 +7,7 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 export interface UserDashboardRecord {
   _id: number | string;
   title: string;
+  image: string;
   image_public_url: string;
   link: string;
   description: string;

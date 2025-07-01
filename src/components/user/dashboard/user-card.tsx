@@ -35,7 +35,7 @@ const UserCard = ({ record }: UserCardProps) => {
             <div className="h-full p-2 bg-white dark:bg-gray-900 rounded-xl">
               <div className="relative w-full h-48">
                 <NextImage
-                  src={record?.image_public_url || "/"}
+                  src={record?.image || "/"}
                   alt="Card Image"
                   className="object-cover rounded-xl"
                   fill

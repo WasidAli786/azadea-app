@@ -3,6 +3,7 @@ import { Form } from "@heroui/form";
 import InputUI from "../ui/input-ui";
 import ButtonUI from "../ui/button-ui";
 import { Select, SelectItem } from "@heroui/select";
+import ImageUploader from "../ui/image-uploader";
 
 export interface IUserModalProps {
   isOpen: boolean;
@@ -14,6 +15,8 @@ export interface IUserModalProps {
   dashboardAssignee?: any;
   selectedAssignees?: any;
   setSelectedAssignees: React.Dispatch<React.SetStateAction<any>>;
+  imageBase64: string | null;
+  setImageBase64: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const ModulesModal = ({
@@ -26,6 +29,8 @@ const ModulesModal = ({
   dashboardAssignee,
   selectedAssignees,
   setSelectedAssignees,
+  imageBase64,
+  setImageBase64,
 }: IUserModalProps) => {
   return (
     <>
@@ -70,6 +75,7 @@ const ModulesModal = ({
               defaultValue={defaultValues?.link}
             />
           </div>
+          <ImageUploader onChange={setImageBase64} defaultImage={imageBase64} />
           <div className="flex justify-end w-full gap-3">
             <ButtonUI size="sm" variant="flat" onPress={onClose}>
               CANCEL

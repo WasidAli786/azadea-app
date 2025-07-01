@@ -28,13 +28,14 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: Request) {
   await connectDB();
-  const { title, description, link, assignee } = await req.json();
+  const { title, description, link, assignee, image } = await req.json();
 
   const card = await Card.create({
     title,
     description,
     link,
     assignee,
+    image,
     created: new Date(),
   });
 
