@@ -39,6 +39,7 @@ export default async function DashboardDetailPage({
           sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
           height="1000vh"
           width="100%"
+          className="dark:invert"
         />
       </div>
     </>

@@ -166,7 +166,7 @@ export const UsersTable = () => {
         <InputUI
           isClearable
           className="w-full md:max-w-60"
-          placeholder="Search by title..."
+          placeholder="Search by name..."
           startContent={<SearchIcon className="text-2xl" />}
           value={filterValue}
           onClear={() => setFilterValue("")}
