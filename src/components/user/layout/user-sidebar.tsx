@@ -6,6 +6,7 @@ import { CloseIcon } from "../../icons";
 import ButtonUI from "../../ui/button-ui";
 import { userMenu } from "@/src/config/site";
 import { useUser } from "@/src/context/user-context";
+import { useRouter } from "next/navigation";
 
 interface Props {
   isOpen: boolean;
@@ -23,6 +24,7 @@ const UserSidebar: React.FC<Props> = ({
   onSearchChange,
 }) => {
   const { user, logout } = useUser();
+  const router = useRouter();
 
   return (
     <div
@@ -30,7 +32,7 @@ const UserSidebar: React.FC<Props> = ({
         isOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
-      <div className="flex items-center justify-between h-16 p-4 border-b dark:border-gray-700">
+      <div className="flex justify-between items-center p-4 h-16 border-b dark:border-gray-700">
         <div>
           <p className="text-sm font-medium">Signed in as</p>
           <p className="text-sm font-medium">{user?.email}</p>
@@ -59,9 +61,20 @@ const UserSidebar: React.FC<Props> = ({
         <ul>
           {userMenu.map((menu) => (
             <Fragment key={menu.label}>
-              {!menu.isLogout ? (
+              {menu.link ? (
                 <li
-                  className="flex items-center gap-3 p-2 rounded-md cursor-pointer hover:bg-default/40"
+                  className="flex gap-3 items-center p-2 rounded-md cursor-pointer hover:bg-default/40"
+                  onClick={() => {
+                    router.push(menu.link!);
+                    onClose();
+                  }}
+                >
+                  <menu.icon />
+                  {menu.label}
+                </li>
+              ) : !menu.isLogout ? (
+                <li
+                  className="flex gap-3 items-center p-2 rounded-md cursor-pointer hover:bg-default/40"
                   onClick={() => {
                     onModalOpen();
                     onClose();
@@ -72,7 +85,7 @@ const UserSidebar: React.FC<Props> = ({
                 </li>
               ) : (
                 <li
-                  className="flex items-center gap-3 p-2 rounded-md cursor-pointer hover:bg-danger/20 hover:text-danger"
+                  className="flex gap-3 items-center p-2 rounded-md cursor-pointer hover:bg-danger/20 hover:text-danger"
                   onClick={() => {
                     logout();
                     onClose();

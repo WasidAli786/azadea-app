@@ -13,11 +13,18 @@ import { Avatar } from "@heroui/avatar";
 import { ThemeSwitch } from "../../theme-switch";
 import Link from "next/link";
 import UserSidebar from "./user-sidebar";
-import { LogoutIcon, MenuIcon, PasswordIcon } from "../../icons";
+import {
+  BookmarkBorderIcon,
+  LogoutIcon,
+  MenuIcon,
+  PasswordIcon,
+} from "../../icons";
+import { Camera } from "lucide-react";
 import ButtonUI from "../../ui/button-ui";
 import { useDebounce } from "@/src/hooks/use-debounce";
 import { useUser } from "@/src/context/user-context";
 import ChangePasswordModal from "../../change-password-modal";
+import ProfilePictureModal from "../../profile-picture-modal";
 import { useDisclosure } from "@heroui/modal";
 
 const UserNavbar = () => {
@@ -25,6 +32,12 @@ const UserNavbar = () => {
   const { user, logout } = useUser();
   const searchParams = useSearchParams();
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const {
+    isOpen: isProfileOpen,
+    onOpen: onProfileOpen,
+    onClose: onProfileClose,
+    onOpenChange: onProfileOpenChange,
+  } = useDisclosure();
   const [search, setSearch] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -49,14 +62,14 @@ const UserNavbar = () => {
   return (
     <>
       <nav className="border-b dark:border-gray-700">
-        <div className="container flex items-center justify-between h-16">
+        <div className="container flex justify-between items-center h-16">
           <Link href="/dashboard">
             <h1 className="text-xs font-semibold sm:text-sm">
               Welcome DataCrypt-testing Account!
             </h1>
           </Link>
 
-          <div className="flex items-center gap-2 md:gap-4">
+          <div className="flex gap-2 items-center md:gap-4">
             <div className="hidden md:block">
               <InputUI
                 name="search"
@@ -78,6 +91,9 @@ const UserNavbar = () => {
                       className="transition-transform"
                       color="secondary"
                       size="sm"
+                      src={user?.profilePicture}
+                      showFallback
+                      name={user?.name || user?.email}
                     />
                   </DropdownTrigger>
                   <DropdownMenu aria-label="Profile Actions" variant="flat">
@@ -85,9 +101,20 @@ const UserNavbar = () => {
                       <p className="font-semibold">Signed in as</p>
                       <p className="font-semibold">{user?.email}</p>
                     </DropdownItem>
-                    {/* <DropdownItem key="favorites" href="/favorites">
+                    <DropdownItem
+                      key="profile-picture"
+                      startContent={<Camera size={16} />}
+                      onClick={onProfileOpen}
+                    >
+                      Update Profile Picture
+                    </DropdownItem>
+                    <DropdownItem
+                      key="favorites"
+                      href="/dashboard/favorites"
+                      startContent={<BookmarkBorderIcon className="text-lg" />}
+                    >
                       Favorites
-                    </DropdownItem> */}
+                    </DropdownItem>
                     <DropdownItem
                       key="change-password"
                       startContent={<PasswordIcon />}
@@ -133,6 +160,11 @@ const UserNavbar = () => {
         isOpen={isOpen}
         onClose={onClose}
         onOpenChange={onOpenChange}
+      />
+      <ProfilePictureModal
+        isOpen={isProfileOpen}
+        onClose={onProfileClose}
+        onOpenChange={onProfileOpenChange}
       />
     </>
   );

@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema({
   department: String,
   password: String,
   role: { type: String, enum: ["admin", "user"] },
+  profilePicture: { type: String, default: null },
   created: { type: Date, default: Date.now },
   bookmarks: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Card", default: [] },

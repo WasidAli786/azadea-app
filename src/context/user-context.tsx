@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 type User = {
   id: string;
   email: string;
+  name?: string;
   role: "admin" | "user";
+  profilePicture?: string;
 };
 
 type UserContextType = {

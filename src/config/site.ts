@@ -4,6 +4,7 @@ import {
   LogoutIcon,
   PasswordIcon,
   UserIcon,
+  BookmarkBorderIcon,
 } from "../components/icons";
 
 export type SiteConfig = typeof siteConfig;
@@ -14,10 +15,11 @@ export const siteConfig = {
 };
 
 export const userMenu = [
-  // {
-  //   label: "Favorites",
-  //   link: "/favorites",
-  // },
+  {
+    icon: BookmarkBorderIcon,
+    label: "Favorites",
+    link: "/dashboard/favorites",
+  },
   {
     icon: PasswordIcon,
     label: "Change Password",

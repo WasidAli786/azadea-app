@@ -22,23 +22,27 @@ export async function GET() {
       .lean()) as any;
     const userBookmarks = user?.bookmarks || [];
 
-    // Get cards assigned to user
-    const cards = await Card.find({ assignee: userId })
+    if (userBookmarks.length === 0) {
+      return NextResponse.json({ cards: [] });
+    }
+
+    // Get only the bookmarked cards that are assigned to the user
+    const cards = await Card.find({
+      _id: { $in: userBookmarks },
+      assignee: userId,
+    })
       .sort({ created: -1 })
       .lean();
 
-    // Add bookmark information to each card
-    const cardsWithBookmarks = cards.map((card: any) => ({
+    // Add bookmark information to each card (all should be true)
+    const cardsWithBookmarks = cards.map((card) => ({
       ...card,
-      isBookmarked: userBookmarks.some(
-        (bookmarkId: any) =>
-          bookmarkId.toString() === (card._id as any).toString()
-      ),
+      isBookmarked: true,
     }));
 
     return NextResponse.json({ cards: cardsWithBookmarks });
   } catch (error) {
-    console.error("Error fetching cards:", error);
+    console.error("Error fetching favorites:", error);
     return NextResponse.json({ cards: [] });
   }
 }
